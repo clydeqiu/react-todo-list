@@ -9,7 +9,9 @@ export default class Footer extends Component {
     this.props.clearAllDone()
   }
   render() {
+    // render 中可以写获取props的代码 
     const {todos} = this.props;
+    // 已完成/ 全部的数量 可以由计算获得 就无需存在state中
     const doneCount = todos.reduce((pre,todo)=> pre + (todo.done ? 1 : 0),0)
     const total = todos.length
     return (
