@@ -19,13 +19,15 @@ export default class TodoList extends Component {
     this.setState({todos: newTodos})
   }
   // 用于更新一个todo对象
-  updateTodo = (id,done)=>{
+  updateTodo = (id, done)=>{
     const {todos} = this.state;
-    todos.map(todoObj =>{
+    // 数组的map函数的返回值为新数组
+    const newTodos = todos.map(todoObj =>{
       // ES6中语法 如果对象对象中没有，则新增属性，如果有，则替换对象属性值
-      if(todoObj === id) return {...todoObj,done}
+      if(todoObj.id === id) return {...todoObj,done}
       else return todoObj
     })
+    this.setState({todos: newTodos})
   }
   deleteTodo = (id)=>{
     const {todos} = this.state;
@@ -36,12 +38,22 @@ export default class TodoList extends Component {
     });
     this.setState({todos:todos})
   }
+  handleCheckAll = (done) => {
+    const {todos} = this.state;
+    const newTodos = todos.map(todoObj => {return {...todoObj,done}})
+    this.setState({todos: newTodos})
+  }
+  clearAllDone = () => {
+    const {todos} = this.state
+    const newTodos = todos.filter(todoObj => !todoObj.done)
+    this.setState({todos: newTodos})
+  }
   render() {
     return (
       <div className='todoList'>
         <Header addTodo={this.addTodo}/>
         <List updateTodo={this.updateTodo} deleteTodo={this.deleteTodo} todos={this.state.todos}/>
-        <Footer todos={this.state.todos}/>
+        <Footer handleCheckAll={this.handleCheckAll} todos={this.state.todos} clearAllDone={this.clearAllDone}/>
       </div>
     )
   }

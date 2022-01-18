@@ -10,6 +10,7 @@ export default class Header extends Component {
   }
   handleKeyUp = (event)=>{
     const {target,keyCode} = event;
+    if(target.value.trim() === '') return false
     if(keyCode === 13) {
       const todoObj = {
         id: nanoid(),
@@ -17,6 +18,7 @@ export default class Header extends Component {
         done: false
       }
       this.props.addTodo(todoObj)
+      target.value = ''
     }
   }
   render() {
